@@ -1,0 +1,35 @@
+.container {
+    display: flex; /* use flexbox to align the boxes horizontally */
+    justify-content: space-around; /* distribute the boxes evenly */
+  }
+  
+  .mybox {
+    width: 100px; /* set a fixed width for the boxes */
+    height: 100px; /* set a fixed height for the boxes */
+    border: 1px solid black; /* add a border for the boxes */
+    display: flex; /* use flexbox to align the icon and text vertically */
+    flex-direction: column; /* stack the icon and text on top of each other */
+    align-items: center; /* center the icon and text horizontally */
+    justify-content: center; /* center the icon and text vertically */
+  }
+  
+  .box i {
+    font-size: 40px; /* adjust the icon size */
+  }
+  
+  /* .box p {
+    margin: 0; /* remove the default margin of the paragraph */
+
+  .LuChefHat{
+    margin-top: -25px;
+  }
+  p#MyAccount{
+    /* margin-top: -20px; */
+    margin-bottom: 1rem;
+    color: red;
+  }
+
+  p#SubmitARecipe, p#SearchForRecipes, p#MyAccount{
+    align-items: center;
+    display:flex;
+  }

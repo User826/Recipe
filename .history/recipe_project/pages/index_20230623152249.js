@@ -4,7 +4,6 @@ import Post from "../components/users"
 import styles from '../pages/index.module.css'
 import {PopupTrigger,Backdrop, Popup} from "../components/popup";
 import RecipeReviewCard from "../components/card";
-import BasicNavBar from "../components/navbar";
 
 
 
@@ -42,15 +41,12 @@ export default function Useradmin() {
     if (isLoggedInVariable == ""){
         return <div style={{overflow:'hidden'}}>
           <div className={styles.bg}> 
-            <div>
-              <BasicNavBar/>
-            </div>
-            <div className={styles.buttons}>
-              <UserButton onClick ={handleLoginClick} />        
-              <AdminButton onClick = {handleLogoutClick}/>            
-            </div>
-            <div>
-              <RecipeReviewCard/>
+            <div style={{}}>
+            {/* <img src="/cupcake.jpg" alt="Cupcake" style={{width:"100vw", height:"100vh",objectFit: "cover",position:"absolute",left:0,bottom:0}}></img> */}
+            {/* <Post></Post> */}
+            <UserButton onClick ={handleLoginClick} />        
+            <AdminButton onClick = {handleLogoutClick}/>
+            <div><RecipeReviewCard/></div>
             </div>
           </div>
           <div>

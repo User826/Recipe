@@ -36,21 +36,14 @@
 }
 
 .bg{
+  display: 'flex';
+  justify-content: center;
+  align-items: center;
   width:100vw;
   height: 100vh;
   background-image: url('/cupcake.jpg');
-  background-position: right bottom;
-  background-size: cover;
-  background-repeat: no-repeat;
-  overflow:hidden
-}
-
-.buttons{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.navnav{
-  display:inline-table
+  background-position: "right bottom";
+  background-size: "cover";
+  background-repeat: "no-repeat";
+  overflow:'hidden'
 }

@@ -4,7 +4,6 @@ import Post from "../components/users"
 import styles from '../pages/index.module.css'
 import {PopupTrigger,Backdrop, Popup} from "../components/popup";
 import RecipeReviewCard from "../components/card";
-import BasicNavBar from "../components/navbar";
 
 
 
@@ -43,7 +42,7 @@ export default function Useradmin() {
         return <div style={{overflow:'hidden'}}>
           <div className={styles.bg}> 
             <div>
-              <BasicNavBar/>
+              <nav></nav>
             </div>
             <div className={styles.buttons}>
               <UserButton onClick ={handleLoginClick} />        

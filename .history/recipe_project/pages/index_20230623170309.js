@@ -43,7 +43,7 @@ export default function Useradmin() {
         return <div style={{overflow:'hidden'}}>
           <div className={styles.bg}> 
             <div>
-              <BasicNavBar/>
+
             </div>
             <div className={styles.buttons}>
               <UserButton onClick ={handleLoginClick} />        

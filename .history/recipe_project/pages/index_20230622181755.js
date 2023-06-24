@@ -4,7 +4,6 @@ import Post from "../components/users"
 import styles from '../pages/index.module.css'
 import {PopupTrigger,Backdrop, Popup} from "../components/popup";
 import RecipeReviewCard from "../components/card";
-import BasicNavBar from "../components/navbar";
 
 
 
@@ -40,23 +39,16 @@ export default function Useradmin() {
     console.log(isLoggedInVariable)
 
     if (isLoggedInVariable == ""){
-        return <div style={{overflow:'hidden'}}>
-          <div className={styles.bg}> 
-            <div>
-              <BasicNavBar/>
-            </div>
-            <div className={styles.buttons}>
-              <UserButton onClick ={handleLoginClick} />        
-              <AdminButton onClick = {handleLogoutClick}/>            
-            </div>
-            <div>
-              <RecipeReviewCard/>
-            </div>
-          </div>
+        return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
           <div>
-            <p>Hello</p>
+            <img src="/cupcake.jpg" alt="Cupcake" style={{objectFit: "cover"}}></img>
           </div>
-        </div>
+        {/* <Post></Post> */}
+        <UserButton onClick ={handleLoginClick} />        
+        <AdminButton onClick = {handleLogoutClick}/>
+        <div><RecipeReviewCard/></div>
+        
+    </div>
     }
     else if (isLoggedInVariable == "user"){
         return <div onClick = {handleParentClick}>

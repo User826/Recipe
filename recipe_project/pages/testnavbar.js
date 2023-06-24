@@ -10,7 +10,7 @@ function TestNavBar() {
       <p>My Account</p>
     </div>
     <div className={styles.box}>
-      <i class="fas fa-cog"></i>
+      <i class="fas fa-cog"></i> \
       <p>Search for Recipes</p>
     </div>
   </div>)

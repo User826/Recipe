@@ -49,9 +49,13 @@ export default function Useradmin() {
               <UserButton onClick ={handleLoginClick} />        
               <AdminButton onClick = {handleLogoutClick}/>            
             </div>
-            <div>
+            {/* <div>
               <RecipeReviewCard/>
-            </div>
+            </div> */}
+            <article className={styles.mainArticle}>
+              <h1>Welcome to Momo's World!</h1>
+              <p>This is where you can find and upload recipes!</p>
+            </article>
           </div>
           <div>
             <p>Hello</p>

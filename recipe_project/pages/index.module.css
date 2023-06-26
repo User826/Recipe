@@ -54,3 +54,11 @@
 .navnav{
   display:inline-table
 }
+
+.mainArticle{
+  margin: 0 auto;
+  width: 1170px;
+  text-align: left;
+  position: relative;
+  max-width: 96%
+}

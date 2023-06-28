@@ -194,30 +194,60 @@ app.post('/test', jsonParser, (req, res) => {
     // res.status(200).send({ message: (req.body.title) + ' ' + (req.body.post) })
 })
 
-app.get('/sample', jsonParser, (req, res) =>{
+app.get('/recipe', jsonParser, (req, res) =>{
   
   const { MongoClient } = require("mongodb");
   // Replace the uri string with your connection string.
   const uri = "mongodb+srv://Dannywu826:Momo826826@cluster0.sstc4pm.mongodb.net/?retryWrites=true&w=majority";
   const client = new MongoClient(uri);
-  async function run() {
-    try {
-      const database = client.db('Recipe');
-      const movies = database.collection('User');
-      // Query for a movie that has the title 'Back to the Future'
-      const query = { username: 'Today is' };
-      const movie = await movies.findOne(query);
-      console.log(movie);
-    } finally {
-      // Ensures that the client will close when you finish/error
-      await client.close();
-    }
-  }
-  run().catch(console.dir);
-  res.status(200).send({ message: "NO" })
+  var collection
+    client.connect(err => {
+      // console.log(req.body.type)
+      // console.log(req.body.name)
+    
+      // if (req.body.type == 'Username'){
+      //   collection = client.db("Recipe").collection("User");
+        
+      // }
+      // else if (req.body.type == 'Admin Username'){
+      //   collection = client.db("Recipe").collection("Admin");
+      // }
+      // perform actions on the collection object
+     
+      // console.log(collection.find({title:req.body.title, post: req.body.post}))
 
-})
+      collection = client.db("Recipe").collection("RecipeUnit");
 
+      const cursor = collection.find()
+
+      cursurArray = cursor.toArray().then(function(result){
+          // console.log(result)
+          // console.log(result.length==0)
+
+          if (result.length != 0){
+        
+            res.status(200).send({sendData:result})
+            
+      
+          }
+          else {
+            res.status(200).send({message: "Invalid login"})
+          }
+      })
+      // console.log(cursurArray)
+
+      // console.log(cursurArray.length)
+
+      
+
+      
+      // if(cursor.next() != null){
+      //   allowLogIn = true
+      // }
+      
+      setTimeout(() => {client.close()}, 1500)
+      // client.close()
+})})
 
 app.listen(5000, () => {
     console.log("Listening to port 5000")

@@ -5,7 +5,7 @@ import styles from '../pages/index.module.css'
 import {PopupTrigger,Backdrop, Popup} from "../components/popup";
 import RecipeReviewCard from "../components/card";
 import BasicNavBar from "../components/navbar";
-
+import { set } from "mongoose";
 
 
 
@@ -13,14 +13,17 @@ import BasicNavBar from "../components/navbar";
 export default function Useradmin() {
     const [isLoggedIn, setIsLoggedIn] = useState("");
     const [showPopup, setShowPopup] = useState(false);
+    const [recipes, setRecipes] = useState([]);
+    const [grabbedData, setGrabbedData] = useState(false);
+    const [initialData, setInitialData] = useState(false);
 
     function handleLoginClick() {
-        //this.setState({isLoggedIn: true});
+        
         setIsLoggedIn("user")
       };
     
     function handleLogoutClick() {
-        //this.setState({isLoggedIn: false});
+        
         setIsLoggedIn("admin")
       }
     const handleParentClick = () => {
@@ -31,15 +34,45 @@ export default function Useradmin() {
     const isLoggedInVariable = isLoggedIn;
     let button;
 
-    // if (isLoggedInVariable) {
-    //     button = <LogoutButton onClick={handleLogoutClick} />;
-    // } else {
-    //     button = <LoginButton onClick={handleLoginClick} />;
-    // }
-
-    console.log(isLoggedInVariable)
-
-    if (isLoggedInVariable == ""){
+    
+    if (initialData==false){
+    const getData = async () => {
+      const data = {
+        "type": "Username"
+      };
+     
+      const response = await fetch("http://localhost:5000/recipe", {
+        method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+          'Content-Type': 'application/json'
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        // body: JSON.stringify(data) // body data type must match "Content-Type" header
+      });
+      return response.json();
+    };
+    getData().then((data) => {
+      
+      
+      var r = [];
+      var testItems = (data.sendData).map( (datum) =>{
+          
+          r.push({title:datum.title, subheader:datum.subheader, imageURI: datum.imageURI, summary: datum.summary, steps:datum.steps})
+          })
+      
+      setRecipes(r)   
+      setGrabbedData(true)
+      setInitialData(true)
+  
+      return recipes    
+    });
+  }
+    if (grabbedData == true) {
         return <div style={{overflow:'hidden'}}>
           <div className={styles.bg}> 
             <div>
@@ -49,14 +82,24 @@ export default function Useradmin() {
               <UserButton onClick ={handleLoginClick} />        
               <AdminButton onClick = {handleLogoutClick}/>            
             </div>
-            {/* <div>
-              <RecipeReviewCard/>
-            </div> */}
             <article className={styles.mainArticle}>
               <h1>Welcome to Momo's World!</h1>
               <p>This is where you can find and upload recipes!</p>
             </article>
           </div>
+          <div>
+            {recipes.map((recipe) => {
+              return (
+              <RecipeReviewCard
+                key={recipe.title}
+                cardTitle={recipe.title}
+                cardSubheader={recipe.subheader}
+                cardImageURI={recipe.imageURI}
+                cardSummary={recipe.summary}
+                cardSteps={recipe.steps}
+              />
+            )})}
+    </div>
           <div>
             <p>Hello</p>
           </div>
@@ -69,8 +112,6 @@ export default function Useradmin() {
                     <Post name="Username"></Post>
                     <PopupTrigger></PopupTrigger>
                 </div>
-            
-                // <UserButton onClick = {handleLoginCLick}> </UserButton>
         
     }
     else if (isLoggedInVariable == "admin"){
@@ -81,11 +122,4 @@ export default function Useradmin() {
                 </div> 
         
     }
-    
-    // return <div>
-    //     {/* <Post></Post> */}
-    //     <UserButton onClick ={handleLoginClick}/>        
-    //     <AdminButton onClick = {handleLoginClick}/>
-        
-    // </div>
   }

@@ -16,7 +16,7 @@ export default function About(props) {
   const listItems = numbers && numbers.map( (number) =>
       <li key={number.toString}>{number}</li>); 
 
-  console.log(listItems)
+  // console.log(listItems)
 
   const postData = async () => {
     const data = {
@@ -40,19 +40,19 @@ export default function About(props) {
   };
   postData().then((data) => {
     // console.log(typeof data.sendData)
-    console.log("Before Array.isArray")
-    console.log(Array.isArray(data.sendData))
-    console.log(data.sendData)
+    // console.log("Before Array.isArray")
+    // console.log(Array.isArray(data.sendData))
+    // console.log(data.sendData)
     // var keys = Object.keys(data.sendData);
     // console.log(Array.isArray(keys))
     // console.log(keys[0])
     // console.log(typeof keys[0])
     var testItems = (data.sendData).map( (datum) =>
         <li key={datum._id}> Hello!{datum.username} {datum.password}</li>)
-    console.log("Before console.log(testItems")
-    console.log(testItems)
+    // console.log("Before console.log(testItems")
+    // console.log(testItems)
     setStoreTest(testItems)
-    console.log(storeTest)
+    // console.log(storeTest)
 
     setGrabbedData(true)
 
@@ -77,10 +77,10 @@ export default function About(props) {
     //     <li key={number.toString}>{number}</li>); 
 
     if(grabbedData == true){
-        console.log("This is storeTest")
-        console.log(storeTest)
-        console.log("This is grabbed data")
-        console.log(grabbedData)
+        // console.log("This is storeTest")
+        // console.log(storeTest)
+        // console.log("This is grabbed data")
+        // console.log(grabbedData)
         return <div>
           About
           <p>Will this work? {router.query.test}</p>

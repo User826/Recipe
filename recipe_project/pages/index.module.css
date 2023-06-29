@@ -62,3 +62,26 @@
   position: relative;
   max-width: 96%
 }
+
+.recipecardscontainer {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  
+}
+
+.recipecardscontainer > * {
+  margin: 0 10px;
+}
+
+.parent {
+  width: 60%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border:0;
+  margin:0 auto;
+  padding:0;
+
+}

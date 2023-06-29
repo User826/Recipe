@@ -66,6 +66,7 @@ export default function Useradmin() {
           })
       
       setRecipes(r)   
+      console.log(r);
       setGrabbedData(true)
       setInitialData(true)
   
@@ -73,8 +74,9 @@ export default function Useradmin() {
     });
   }
     if (grabbedData == true) {
-        return <div style={{overflow:'hidden'}}>
-          <div className={styles.bg}> 
+        return <div className={styles.bg}style={{overflow:'hidden'}}>
+          <div className={styles.parent}>
+            <div>
             <div>
               <BasicNavBar/>
             </div>
@@ -87,7 +89,7 @@ export default function Useradmin() {
               <p>This is where you can find and upload recipes!</p>
             </article>
           </div>
-          <div>
+          <div className={styles.recipecardscontainer}>
             {recipes.map((recipe) => {
               return (
               <RecipeReviewCard
@@ -99,7 +101,9 @@ export default function Useradmin() {
                 cardSteps={recipe.steps}
               />
             )})}
-    </div>
+          </div>
+            </div> 
+            
           <div>
             <p>Hello</p>
           </div>

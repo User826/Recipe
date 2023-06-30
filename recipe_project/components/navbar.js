@@ -7,8 +7,19 @@ import UserNavBar from './usernavbar';
 import {GiForkKnifeSpoon} from 'react-icons/gi'
 import {LuChefHat} from 'react-icons/lu'
 import {GrSearch} from 'react-icons/gr'
+import {RecipeModal} from './modal'
+import { useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal';
 
 function BasicNavBar() {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+
   return (
     <Container>
         <Navbar className="bg-body-tertiary">
@@ -31,11 +42,24 @@ function BasicNavBar() {
                 
                 {/* <UserNavBar></UserNavBar> */}
                 <Nav>
-                    <Navbar.Brand href="#home">
-                        <GiForkKnifeSpoon size={35}/>
-                        <br/>
-                        Submit a Recipe
+                    <Navbar.Brand>
+                    <GiForkKnifeSpoon size={35}/>
+                    <br/>
+                    Submit a Recipe
+                    
+                  
+                    
+                    {/* <Button variant="primary" onClick={handleShow}>
+                        Open Modal
+                    </Button> */}
                     </Navbar.Brand>
+                    <Button variant="primary" onClick={handleShow}>
+                    Launch demo modal
+                    </Button>
+                        
+                        
+                    
+                    
                     <Navbar.Brand href="#home">
                         <LuChefHat size={35}/>
                         <br/>
@@ -49,7 +73,42 @@ function BasicNavBar() {
                 </Nav>
             </Container>
         </Navbar>
+        <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="name@example.com"
+                autoFocus
+              />
+            </Form.Group>
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlTextarea1"
+            >
+              <Form.Label>Example textarea</Form.Label>
+              <Form.Control as="textarea" rows={3} />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+        
     </Container>
+
+    
     
   );
 }

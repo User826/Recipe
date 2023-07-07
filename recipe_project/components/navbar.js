@@ -18,7 +18,7 @@ function BasicNavBar() {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const handleSaveChanges = () => {
+    const handleCloseChanges = () => {
       // This function will update the state in the parent component
       handleClose()
       console.log("Save changes clicked");
@@ -79,7 +79,7 @@ function BasicNavBar() {
                 </Nav>
             </Container>
         </Navbar>
-        <RecipeModal show={show} onHide={handleClose} handleSaveChanges={handleSaveChanges}/>
+        <RecipeModal show={show} onHide={handleClose} handleCloseChanges={handleCloseChanges}/>
         {/* <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>

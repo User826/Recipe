@@ -8,10 +8,10 @@ function RecipeModal(props) {
   const [show, setShow] = useState(false);
 
     
-    const handleSaveChanges = () => {
+    const handleCloseChanges = () => {
       // This function will update the state in the parent component
       
-      props.handleSaveChanges();
+      props.handleCloseChanges();
     };
     // const handleShow = () => setShow(true);
 
@@ -19,7 +19,7 @@ function RecipeModal(props) {
 
   return (
     <>
-      <Modal show={props.show} onHide={handleSaveChanges}>
+      <Modal show={props.show} onHide={handleCloseChanges}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
@@ -47,10 +47,10 @@ function RecipeModal(props) {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleSaveChanges}>
+          <Button variant="secondary" onClick={handleCloseChanges}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleSaveChanges}>
+          <Button variant="primary" onClick={handleCloseChanges}>
             Save Changes
           </Button>
         </Modal.Footer>

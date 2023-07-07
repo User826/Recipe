@@ -5,16 +5,21 @@ import Modal from 'react-bootstrap/Modal';
 
 function RecipeModal(props) {
 
-  // const [show, setShow] = useState(props.show);
+  const [show, setShow] = useState(false);
 
-  //   const handleClose = () => setShow(props.handleClose);
-  //   const handleShow = () => setShow(true);
+    const handleClose = () => setShow(props.handleClose);
+    const handleSaveChanges = () => {
+      // This function will update the state in the parent component
+      {handleClose}
+      props.handleSaveChanges();
+    };
+    // const handleShow = () => setShow(true);
 
    
 
   return (
     <>
-      <Modal show={props.show} onHide={props.handleClose}>
+      <Modal show={props.show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
@@ -42,10 +47,10 @@ function RecipeModal(props) {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={props.handleClose}>
+          <Button variant="secondary" onClick={handleSaveChanges}>
             Close
           </Button>
-          <Button variant="primary" onClick={props.handleClose}>
+          <Button variant="primary" onClick={handleSaveChanges}>
             Save Changes
           </Button>
         </Modal.Footer>

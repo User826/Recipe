@@ -7,7 +7,7 @@ import UserNavBar from './usernavbar';
 import {GiForkKnifeSpoon} from 'react-icons/gi'
 import {LuChefHat} from 'react-icons/lu'
 import {GrSearch} from 'react-icons/gr'
-import {RecipeModal} from './modal'
+import RecipeModal from './modal'
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -73,7 +73,8 @@ function BasicNavBar() {
                 </Nav>
             </Container>
         </Navbar>
-        <Modal show={show} onHide={handleClose}>
+        <RecipeModal show={show} onHide={handleClose}/>
+        {/* <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
@@ -93,7 +94,11 @@ function BasicNavBar() {
             >
               <Form.Label>Example textarea</Form.Label>
               <Form.Control as="textarea" rows={3} />
+              
             </Form.Group>
+            <Button variant="primary" type="submit">
+                Submit
+              </Button>
           </Form>
         </Modal.Body>
         <Modal.Footer>
@@ -104,7 +109,7 @@ function BasicNavBar() {
             Save Changes
           </Button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
         
     </Container>
 

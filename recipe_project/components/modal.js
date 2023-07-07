@@ -3,19 +3,18 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 
-function RecipeModal() {
-  const [show, setShow] = useState(false);
+function RecipeModal(props) {
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  // const [show, setShow] = useState(props.show);
+
+  //   const handleClose = () => setShow(props.handleClose);
+  //   const handleShow = () => setShow(true);
+
+   
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button>
-
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={props.show} onHide={props.handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
@@ -35,14 +34,18 @@ function RecipeModal() {
             >
               <Form.Label>Example textarea</Form.Label>
               <Form.Control as="textarea" rows={3} />
+              
             </Form.Group>
+            <Button variant="primary" type="submit">
+                Submit
+              </Button>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={props.handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={props.handleClose}>
             Save Changes
           </Button>
         </Modal.Footer>

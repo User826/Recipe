@@ -21,15 +21,25 @@ function RecipeModal(props) {
     <>
       <Modal show={props.show} onHide={handleCloseChanges}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Add a Recipe</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Email address</Form.Label>
+            <Form.Group className="mb-3" controlId="RecipeTitle">
+              <Form.Label>Recipe Title</Form.Label>
               <Form.Control
-                type="email"
-                placeholder="name@example.com"
+                // type="email"
+                // placeholder="name@example.com"
+                type='text'
+                autoFocus
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="RecipeDescription">
+              <Form.Label>Recipe Description</Form.Label>
+              <Form.Control
+                // type="email"
+                // placeholder="name@example.com"
+                type='text'
                 autoFocus
               />
             </Form.Group>

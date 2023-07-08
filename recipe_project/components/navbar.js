@@ -12,6 +12,7 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import TestRecipeModal from './testmodal';
 
 function BasicNavBar() {
     const [show, setShow] = useState(false);
@@ -19,7 +20,7 @@ function BasicNavBar() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const handleCloseChanges = () => {
-      // This function will update the state in the parent component
+      // This function, when passed to the child, will update the state in the parent component
       handleClose()
       console.log("Save changes clicked");
     };
@@ -79,7 +80,8 @@ function BasicNavBar() {
                 </Nav>
             </Container>
         </Navbar>
-        <RecipeModal show={show} onHide={handleClose} handleCloseChanges={handleCloseChanges}/>
+        {/* <RecipeModal show={show} onHide={handleClose} handleCloseChanges={handleCloseChanges}/> */}
+        <TestRecipeModal show={show} onHide={handleClose}/>
         {/* <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>

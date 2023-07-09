@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import RecipeSteps from './recipesteps';
 
 function RecipeModal(props) {
 
@@ -43,6 +44,7 @@ function RecipeModal(props) {
                 autoFocus
               />
             </Form.Group>
+            <RecipeSteps/>
             <Form.Group
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"

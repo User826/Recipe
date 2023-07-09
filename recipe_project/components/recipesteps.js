@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import Modal from "react-bootstrap/Modal";
 import InputGroup from 'react-bootstrap/InputGroup';
 
-function TestRecipeModal(props) {
+function RecipeSteps(props) {
   const [steps, setSteps] = useState([]);
 
   const handleAddStep = () => {
@@ -29,12 +28,7 @@ function TestRecipeModal(props) {
   };
 
   return (
-    <>
-      <Modal show={props.show} onHide={props.onHide}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add Recipe</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+    <>      
           <Form onSubmit={handleSubmit}>
             {steps.map((step, index) => (
               <InputGroup key={index} className="mb-3">
@@ -50,31 +44,13 @@ function TestRecipeModal(props) {
                   Delete
                 </Button>
               </InputGroup>
-            //   <InputGroup>
-            //   <Form.Control
-            //     placeholder="Recipient's username"
-            //     aria-label="Recipient's username with two button addons"
-            //   />
-            //   <Button variant="outline-secondary">Button</Button>
-            //   <Button variant="outline-secondary">Button</Button>
-            // </InputGroup>
             ))}
             <Button variant="secondary" onClick={handleAddStep}>
               Add Step
             </Button>
           </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={props.onHide}>
-            Close
-          </Button>
-          <Button variant="primary" type="submit" onClick={handleSubmit}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </>
   );
 }
 
-export default TestRecipeModal;
+export default RecipeSteps;

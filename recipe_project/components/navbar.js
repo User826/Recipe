@@ -12,7 +12,7 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import TestRecipeModal from './testmodal';
+import TestRecipeModal from './recipesteps';
 
 function BasicNavBar() {
     const [show, setShow] = useState(false);
@@ -80,8 +80,8 @@ function BasicNavBar() {
                 </Nav>
             </Container>
         </Navbar>
-        {/* <RecipeModal show={show} onHide={handleClose} handleCloseChanges={handleCloseChanges}/> */}
-        <TestRecipeModal show={show} onHide={handleClose}/>
+        <RecipeModal show={show} onHide={handleClose} handleCloseChanges={handleCloseChanges}/>
+        {/* <TestRecipeModal show={show} onHide={handleClose}/> */}
         {/* <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>

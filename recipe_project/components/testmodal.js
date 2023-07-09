@@ -37,9 +37,11 @@ function TestRecipeModal(props) {
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
             {steps.map((step, index) => (
-              <Form.Group key={index} className="mb-3">
-                <Form.Label>Step {index + 1}</Form.Label>
+              <InputGroup key={index} className="mb-3">
+                {/* <Form.Label>Step {index + 1}</Form.Label> */}
                 <Form.Control
+                  placeholder= {`Step ${index + 1}`}
+                  aria-label={`Step ${index + 1}`}
                   type="text"
                   value={step}
                   onChange={(event) => handleStepChange(event, index)}
@@ -47,7 +49,15 @@ function TestRecipeModal(props) {
                 <Button variant="danger" onClick={() => handleDeleteStep(index)}>
                   Delete
                 </Button>
-              </Form.Group>
+              </InputGroup>
+            //   <InputGroup>
+            //   <Form.Control
+            //     placeholder="Recipient's username"
+            //     aria-label="Recipient's username with two button addons"
+            //   />
+            //   <Button variant="outline-secondary">Button</Button>
+            //   <Button variant="outline-secondary">Button</Button>
+            // </InputGroup>
             ))}
             <Button variant="secondary" onClick={handleAddStep}>
               Add Step

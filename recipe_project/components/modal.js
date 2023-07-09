@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import RecipeSteps from './recipesteps';
+import { app } from './firebase'; //Need this in order to use firebase
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/storage';
+
 
 function RecipeModal(props) {
 
@@ -12,6 +16,16 @@ function RecipeModal(props) {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+
+  const [imageURI, setImageURI] = useState("Empty");
+
+  useEffect(() => {
+    if (imageURI !== "Empty") {
+      console.log("I'm running postData");
+      postData();
+    }
+  }, [imageURI]);
+  
 
   const [steps, setSteps] = useState([""]);
 
@@ -55,12 +69,68 @@ function RecipeModal(props) {
     setImage(event.target.files[0]);
   };
 
+  const postData = async () => {
+    var today = new Date();
+    var date = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    const data = {
+      "title": title,
+      "subheader": date,
+      "summary": description,
+      "steps": steps,
+      "image":imageURI
+    };
+    //http://localhost:5000/
+    const response = await fetch("http://localhost:5000/recipe", {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors', // no-cors, *cors, same-origin
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'same-origin', // include, *same-origin, omit
+      headers: {
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: 'follow', // manual, *follow, error
+      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify(data) // body data type must match "Content-Type" header
+    });
+    return response.json();
+  };
+
+
+
   const recipeSubmit = (event) => {
     event.preventDefault()
     console.log(title)
     console.log(description)
     console.log(steps)
     console.log(image)
+    console.log(imageURI)
+
+    
+
+    
+    const storeImage = async (image) => {
+      const storageRef = firebase.storage().ref();
+      const imageRef = storageRef.child(image.name);
+      imageRef.put(image).then(async (snapshot) => {
+        console.log(`Uploaded ${image.name}`)
+        const imageURL = await imageRef.getDownloadURL()
+          console.log("Getting imageURL")
+          console.log(imageURL)
+          setImageURI(imageURL)     
+          
+        // console.log("Getting imageURL")
+        // console.log(imageURL)
+        // setImageURI(imageURL)
+        // console.log("I'm running postData")
+        
+      })
+      // await postData()
+    };
+    storeImage(image)
+
+
+
   }
 
     
@@ -95,7 +165,7 @@ function RecipeModal(props) {
                 value={description}
                 onChange={(event) => setDescription(event.target.value)}
                 type='text'
-                autoFocus
+                // autoFocus
               />
             </Form.Group>
             <RecipeSteps steps={steps} handleAddStep={handleAddStep} handleDeleteStep={handleDeleteStep} handleStepChange={handleStepChange}/>

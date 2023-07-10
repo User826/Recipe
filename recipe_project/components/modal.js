@@ -22,7 +22,9 @@ function RecipeModal(props) {
   useEffect(() => {
     if (imageURI !== "Empty") {
       console.log("I'm running postData");
-      postData();
+      postData().then(()=>{
+        window.location.reload(true);
+      });
     }
   }, [imageURI]);
   
@@ -77,7 +79,7 @@ function RecipeModal(props) {
       "subheader": date,
       "summary": description,
       "steps": steps,
-      "image":imageURI
+      "imageURI":imageURI
     };
     //http://localhost:5000/
     const response = await fetch("http://localhost:5000/recipe", {
@@ -114,20 +116,18 @@ function RecipeModal(props) {
       const imageRef = storageRef.child(image.name);
       imageRef.put(image).then(async (snapshot) => {
         console.log(`Uploaded ${image.name}`)
-        const imageURL = await imageRef.getDownloadURL()
+        // const imageURL = await imageRef.getDownloadURL()
+        const imageURL = imageRef.toString()
           console.log("Getting imageURL")
           console.log(imageURL)
-          setImageURI(imageURL)     
-          
-        // console.log("Getting imageURL")
-        // console.log(imageURL)
-        // setImageURI(imageURL)
-        // console.log("I'm running postData")
+          setImageURI(imageURL)               
+        
         
       })
-      // await postData()
     };
     storeImage(image)
+    
+
 
 
 

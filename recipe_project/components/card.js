@@ -42,6 +42,8 @@ export default function RecipeReviewCard({cardTitle, cardSubheader, cardImageURI
   };
 
   const getImageUrl = async () => {
+    console.log('cardImageURI is')
+    console.log(cardImageURI)
     const imageRef = firebase.storage().refFromURL(cardImageURI);
     const downloadUrl = await imageRef.getDownloadURL();
     setImageUrl(downloadUrl);
@@ -71,7 +73,7 @@ export default function RecipeReviewCard({cardTitle, cardSubheader, cardImageURI
         component="img"
         height="194"
         image={imageUrl}
-        alt="Paella dish"
+        alt={cardSummary}
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">

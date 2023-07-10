@@ -15,6 +15,7 @@ export default function Useradmin() {
     const [showPopup, setShowPopup] = useState(false);
     const [recipes, setRecipes] = useState([]);
     const [grabbedData, setGrabbedData] = useState(false);
+    const [noRecipes, setNoRecipes] = useState(false)
     const [initialData, setInitialData] = useState(false);
 
     function handleLoginClick() {
@@ -57,20 +58,28 @@ export default function Useradmin() {
       return response.json();
     };
     getData().then((data) => {
-      
-      
-      var r = [];
-      var testItems = (data.sendData).map( (datum) =>{
-          
-          r.push({title:datum.title, subheader:datum.subheader, imageURI: datum.imageURI, summary: datum.summary, steps:datum.steps})
-          })
-      
-      setRecipes(r)   
-      console.log(r);
-      setGrabbedData(true)
-      setInitialData(true)
-  
-      return recipes    
+      console.log(data)
+
+      if (data.sendData){
+        
+        console.log(`This is ${data}`)
+        console.log(data)
+        console.log("This is after data")
+        var r = [];
+        var testItems = (data.sendData).map( (datum) =>{
+            
+            r.push({title:datum.title, subheader:datum.subheader, imageURI: datum.imageURI, summary: datum.summary, steps:datum.steps})
+            })
+        
+        setRecipes(r)   
+        console.log(r);
+        setGrabbedData(true)
+        setInitialData(true)          
+      }
+      else{
+        setNoRecipes(true)
+
+      }                           
     });
   }
     if (grabbedData == true) {
@@ -108,6 +117,43 @@ export default function Useradmin() {
             <p>Hello</p>
           </div>
         </div>
+    }
+    else if (noRecipes == true){
+      return <div className={styles.bg}style={{overflow:'hidden'}}>
+          <div className={styles.parent}>
+            <div>
+            <div>
+              <BasicNavBar/>
+            </div>
+            <div className={styles.buttons}>
+              <UserButton onClick ={handleLoginClick} />        
+              <AdminButton onClick = {handleLogoutClick}/>            
+            </div>
+            <article className={styles.mainArticle}>
+              <h1>Welcome to Momo's World!</h1>
+              <p>This is where you can find and upload recipes!</p>
+            </article>
+          </div>
+          {/* <div className={styles.recipecardscontainer}>
+            {recipes.map((recipe) => {
+              return (
+              <RecipeReviewCard
+                key={recipe.title}
+                cardTitle={recipe.title}
+                cardSubheader={recipe.subheader}
+                cardImageURI={recipe.imageURI}
+                cardSummary={recipe.summary}
+                cardSteps={recipe.steps}
+              />
+            )})}
+          </div> */}
+            </div> 
+            
+          <div>
+            <p>Hello</p>
+          </div>
+        </div>
+
     }
     else if (isLoggedInVariable == "user"){
         return <div onClick = {handleParentClick}>

@@ -11,12 +11,7 @@ var jsonParser = bodyParser.json()
 const app = express()
 app.use(cors(corsOptions));
 app.post('/', jsonParser, (req, res) => {
-
-
-    // console.log(req.get('Content-type'))
-    // console.log(typeof(req.body))
     
-
     const { MongoClient, ServerApiVersion } = require('mongodb');
     const uri = "mongodb+srv://Dannywu826:Momo826826@cluster0.sstc4pm.mongodb.net/?retryWrites=true&w=majority";
     const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
@@ -29,18 +24,7 @@ app.post('/', jsonParser, (req, res) => {
         setTimeout(() => {client.close()}, 1500)
 
       });
-
-    // if (err) throw err;
-    // var dbo = db.db("Recipe");
-    // var myobj = { name: "Company Inc", address: "Highway 37" };
-    // dbo.collection("User").insertOne(myobj, function(err, res) {
-    //     if (err) throw err;
-    //     console.log("1 document inserted");
-    //     db.close();
-    // });
-
-
-
+    
       res.status(200).send({ message: (req.body.title) + ' ' + (req.body.post) })
 })
 
@@ -68,9 +52,7 @@ app.post('/confirm', jsonParser, (req, res) => {
         collection = client.db("Recipe").collection("Admin");
       }
       // perform actions on the collection object
-     
-      // console.log(collection.find({title:req.body.title, post: req.body.post}))
-
+          
       const cursor = collection.find({username:req.body.name, password: req.body.password})
 
       cursurArray = cursor.toArray().then(function(result){
@@ -87,36 +69,9 @@ app.post('/confirm', jsonParser, (req, res) => {
             res.status(200).send({message: "Invalid login"})
           }
       })
-      // console.log(cursurArray)
-
-      // console.log(cursurArray.length)
-
-      
-
-      
-      // if(cursor.next() != null){
-      //   allowLogIn = true
-      // }
-      
+           
       setTimeout(() => {client.close()}, 1500)
-
     });
-
-  // if (err) throw err;
-  // var dbo = db.db("Recipe");
-  // var myobj = { name: "Company Inc", address: "Highway 37" };
-  // dbo.collection("User").insertOne(myobj, function(err, res) {
-  //     if (err) throw err;
-  //     console.log("1 document inserted");
-  //     db.close();
-  // });
-
-
-    // if (allowLogIn == true){
-    //   res.status(200).send({message: "You can log in!"})
-
-    // }
-    // res.status(200).send({ message: (req.body.title) + ' ' + (req.body.post) })
 })
 
 app.post('/test', jsonParser, (req, res) => {
@@ -131,9 +86,7 @@ app.post('/test', jsonParser, (req, res) => {
 
   var collection
     client.connect(err => {
-      // console.log(req.body.type)
-      // console.log(req.body.name)
-    
+          
       if (req.body.type == 'Username'){
         collection = client.db("Recipe").collection("User");
         
@@ -141,57 +94,24 @@ app.post('/test', jsonParser, (req, res) => {
       else if (req.body.type == 'Admin Username'){
         collection = client.db("Recipe").collection("Admin");
       }
-      // perform actions on the collection object
-     
-      // console.log(collection.find({title:req.body.title, post: req.body.post}))
+      // perform actions on the collection object     
 
       const cursor = collection.find()
 
       cursurArray = cursor.toArray().then(function(result){
-          // console.log(result)
-          // console.log(result.length==0)
-
+          
           if (result.length != 0){
         
-            res.status(200).send({sendData:result})
-            
+            res.status(200).send({sendData:result})            
       
           }
           else {
             res.status(200).send({message: "Invalid login"})
           }
       })
-      // console.log(cursurArray)
-
-      // console.log(cursurArray.length)
-
-      
-
-      
-      // if(cursor.next() != null){
-      //   allowLogIn = true
-      // }
-      
-      setTimeout(() => {client.close()}, 1500)
-      // client.close()
-
-    });
-
-  // if (err) throw err;
-  // var dbo = db.db("Recipe");
-  // var myobj = { name: "Company Inc", address: "Highway 37" };
-  // dbo.collection("User").insertOne(myobj, function(err, res) {
-  //     if (err) throw err;
-  //     console.log("1 document inserted");
-  //     db.close();
-  // });
-
-
-    // if (allowLogIn == true){
-    //   res.status(200).send({message: "You can log in!"})
-
-    // }
-    // res.status(200).send({ message: (req.body.title) + ' ' + (req.body.post) })
+            
+      setTimeout(() => {client.close()}, 1500)      
+    });  
 })
 
 app.get('/recipe', jsonParser, (req, res) =>{
@@ -202,51 +122,22 @@ app.get('/recipe', jsonParser, (req, res) =>{
   const client = new MongoClient(uri);
   var collection
     client.connect(err => {
-      // console.log(req.body.type)
-      // console.log(req.body.name)
-    
-      // if (req.body.type == 'Username'){
-      //   collection = client.db("Recipe").collection("User");
-        
-      // }
-      // else if (req.body.type == 'Admin Username'){
-      //   collection = client.db("Recipe").collection("Admin");
-      // }
-      // perform actions on the collection object
-     
-      // console.log(collection.find({title:req.body.title, post: req.body.post}))
-
+      
       collection = client.db("Recipe").collection("RecipeUnit");
 
       const cursor = collection.find()
 
       cursurArray = cursor.toArray().then(function(result){
-          // console.log(result)
-          // console.log(result.length==0)
-
-          if (result.length != 0){
-        
-            res.status(200).send({sendData:result})
-            
-      
+          
+          if (result.length != 0){        
+            res.status(200).send({sendData:result})                  
           }
           else {
             res.status(200).send({message: "Currently no recipes"})
           }
       })
-      // console.log(cursurArray)
-
-      // console.log(cursurArray.length)
-
-      
-
-      
-      // if(cursor.next() != null){
-      //   allowLogIn = true
-      // }
-      
+            
       setTimeout(() => {client.close()}, 1500)
-      // client.close()
 })})
 
 app.post('/recipe', jsonParser, (req, res) => {

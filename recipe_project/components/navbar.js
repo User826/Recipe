@@ -7,12 +7,14 @@ import UserNavBar from './usernavbar';
 import {GiForkKnifeSpoon} from 'react-icons/gi'
 import {LuChefHat} from 'react-icons/lu'
 import {GrSearch} from 'react-icons/gr'
-import RecipeModal from './modal'
+import RecipeModal from './recipemodal'
+import LoginModal from './loginmodal';
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import TestRecipeModal from './recipesteps';
+
+
 
 function BasicNavBar() {
     const [show, setShow] = useState(false);
@@ -24,6 +26,17 @@ function BasicNavBar() {
       handleClose()
       console.log("Save changes clicked");
     };
+
+    
+    const [loginShow, setLoginShow] = useState(false);
+    const handleLoginClose = () => setLoginShow(false);
+    const handleLoginShow = () => setLoginShow(true);
+    const handleLoginCloseChanges = () => {
+      // This function, when passed to the child, will update the state in the parent component
+      handleLoginClose()
+      console.log("Save changes clicked");
+    };
+
 
   return (
     <Container>
@@ -51,7 +64,10 @@ function BasicNavBar() {
                     Submit a Recipe
                     </Navbar.Brand>
                     <Button variant="primary" onClick={handleShow}>
-                    Launch demo modal
+                    Add a Recipe
+                    </Button>
+                    <Button variant="primary" onClick={handleLoginShow}>
+                    Log In
                     </Button>
                     <Navbar.Brand href="#home">
                         <LuChefHat size={35}/>
@@ -66,7 +82,9 @@ function BasicNavBar() {
                 </Nav>
             </Container>
         </Navbar>
-        <RecipeModal show={show} onHide={handleClose} handleCloseChanges={handleCloseChanges}/>                
+        <RecipeModal show={show} onHide={handleClose} handleCloseChanges={handleCloseChanges}/>
+        <LoginModal show={loginShow} onHide={handleLoginClose} handleLoginCloseChanges={handleLoginCloseChanges}/>
+                        
     </Container> 
   );
 }

@@ -7,9 +7,6 @@ import RecipeReviewCard from "../components/card";
 import BasicNavBar from "../components/navbar";
 import { set } from "mongoose";
 
-
-
-
 export default function Useradmin() {
     const [isLoggedIn, setIsLoggedIn] = useState("");
     const [showPopup, setShowPopup] = useState(false);
@@ -18,17 +15,15 @@ export default function Useradmin() {
     const [noRecipes, setNoRecipes] = useState(false)
     const [initialData, setInitialData] = useState(false);
 
-    function handleLoginClick() {
-        
+    function handleLoginClick() {        
         setIsLoggedIn("user")
-      };
+    };
     
-    function handleLogoutClick() {
-        
+    function handleLogoutClick() {        
         setIsLoggedIn("admin")
-      }
+    }
     const handleParentClick = () => {
-      setShowPopup(false);
+        setShowPopup(false);
     };
     
     
@@ -37,51 +32,50 @@ export default function Useradmin() {
 
     
     if (initialData==false){
-    const getData = async () => {
-      const data = {
-        "type": "Username"
+      const getData = async () => {
+        const data = {
+          "type": "Username"
+        };
+      
+        const response = await fetch("http://localhost:5000/recipe", {
+          method: 'GET', // *GET, POST, PUT, DELETE, etc.
+          mode: 'cors', // no-cors, *cors, same-origin
+          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+          credentials: 'same-origin', // include, *same-origin, omit
+          headers: {
+            'Content-Type': 'application/json'
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          redirect: 'follow', // manual, *follow, error
+          referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+          // body: JSON.stringify(data) // body data type must match "Content-Type" header
+        });
+        return response.json();
       };
-     
-      const response = await fetch("http://localhost:5000/recipe", {
-        method: 'GET', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, *cors, same-origin
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, *same-origin, omit
-        headers: {
-          'Content-Type': 'application/json'
-          // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        redirect: 'follow', // manual, *follow, error
-        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        // body: JSON.stringify(data) // body data type must match "Content-Type" header
-      });
-      return response.json();
-    };
-    getData().then((data) => {
-      console.log(data)
-
-      if (data.sendData){
-        
-        console.log(`This is ${data}`)
+      getData().then((data) => {
         console.log(data)
-        console.log("This is after data")
-        var r = [];
-        var testItems = (data.sendData).map( (datum) =>{
-            
-            r.push({title:datum.title, subheader:datum.subheader, imageURI: datum.imageURI, summary: datum.summary, steps:datum.steps})
-            })
-        
-        setRecipes(r)   
-        console.log(r);
-        setGrabbedData(true)
-        setInitialData(true)          
-      }
-      else{
-        setNoRecipes(true)
 
-      }                           
-    });
-  }
+        if (data.sendData){
+          
+          console.log(`This is ${data}`)
+          console.log(data)
+          console.log("This is after data")
+          var r = [];
+          var testItems = (data.sendData).map( (datum) =>{
+              
+              r.push({title:datum.title, subheader:datum.subheader, imageURI: datum.imageURI, summary: datum.summary, steps:datum.steps})
+              })
+          
+          setRecipes(r)   
+          console.log(r);
+          setGrabbedData(true)
+          setInitialData(true)          
+        }
+        else{
+          setNoRecipes(true)
+        }                           
+      });
+    }
     if (grabbedData == true) {
         return <div className={styles.bg}style={{overflow:'hidden'}}>
           <div className={styles.parent}>
@@ -134,19 +128,6 @@ export default function Useradmin() {
               <p>This is where you can find and upload recipes!</p>
             </article>
           </div>
-          {/* <div className={styles.recipecardscontainer}>
-            {recipes.map((recipe) => {
-              return (
-              <RecipeReviewCard
-                key={recipe.title}
-                cardTitle={recipe.title}
-                cardSubheader={recipe.subheader}
-                cardImageURI={recipe.imageURI}
-                cardSummary={recipe.summary}
-                cardSteps={recipe.steps}
-              />
-            )})}
-          </div> */}
             </div> 
             
           <div>

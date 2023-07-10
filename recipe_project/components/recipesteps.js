@@ -4,30 +4,16 @@ import Form from "react-bootstrap/Form";
 import InputGroup from 'react-bootstrap/InputGroup';
 
 function RecipeSteps(props) {
-  // const [steps, setSteps] = useState([""]);
 
-  
-  // const handleStepChange = (event, index) => {
-  //   const updatedSteps = [...steps];
-  //   updatedSteps[index] = event.target.value;
-  //   setSteps(updatedSteps);
-  // };
   const handleStepChange = (event, index) => {
-    // const updatedSteps = [...steps];
-    // updatedSteps[index] = event.target.value;
-    // setSteps(updatedSteps);
     props.handleStepChange(event, index)
   };
 
   const handleAddStep = () => {
-    // setSteps((prevSteps) => [...prevSteps, ""]);
     props.handleAddStep()
   };
 
   const handleDeleteStep = (index) => {
-    // const updatedSteps = [...steps];
-    // updatedSteps.splice(index, 1);
-    // setSteps(updatedSteps);
     props.handleDeleteStep(index)
   };
 
@@ -41,7 +27,6 @@ function RecipeSteps(props) {
           <Form onSubmit={handleSubmit}>
             {props.steps.map((step, index) => (
               <InputGroup key={index} className="mb-3">
-                {/* <Form.Label>Step {index + 1}</Form.Label> */}
                 <Form.Control
                   placeholder= {`Step ${index + 1}`}
                   aria-label={`Step ${index + 1}`}

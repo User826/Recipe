@@ -28,7 +28,6 @@ function RecipeModal(props) {
     }
   }, [imageURI]);
   
-
   const [steps, setSteps] = useState([""]);
 
   const addStep = () => {
@@ -63,9 +62,7 @@ function RecipeModal(props) {
     stepChange(event, index)
     console.log("Step changed")
   };
-  
-  
-  
+   
   const handleImageChange = (event) => {
     console.log(event.target.files[0]);
     setImage(event.target.files[0]);
@@ -98,50 +95,26 @@ function RecipeModal(props) {
     return response.json();
   };
 
-
-
   const recipeSubmit = (event) => {
+    
     event.preventDefault()
-    console.log(title)
-    console.log(description)
-    console.log(steps)
-    console.log(image)
-    console.log(imageURI)
 
-    
-
-    
     const storeImage = async (image) => {
       const storageRef = firebase.storage().ref();
       const imageRef = storageRef.child(image.name);
       imageRef.put(image).then(async (snapshot) => {
-        console.log(`Uploaded ${image.name}`)
-        // const imageURL = await imageRef.getDownloadURL()
-        const imageURL = imageRef.toString()
-          console.log("Getting imageURL")
-          console.log(imageURL)
-          setImageURI(imageURL)               
-        
-        
+        const imageURL = imageRef.toString()          
+        setImageURI(imageURL)                             
       })
     };
-    storeImage(image)
-    
-
-
-
-
+    storeImage(image)    
   }
-
     
   const handleCloseChanges = () => {
-    // This function will update the state in the parent component
-    
+    // This function will update the state in the parent component    
     props.handleCloseChanges();
   };
-
    
-
   return (
     <>
       <Modal show={props.show} onHide={handleCloseChanges}>
@@ -164,8 +137,7 @@ function RecipeModal(props) {
               <Form.Control
                 value={description}
                 onChange={(event) => setDescription(event.target.value)}
-                type='text'
-                // autoFocus
+                type='text'                
               />
             </Form.Group>
             <RecipeSteps steps={steps} handleAddStep={handleAddStep} handleDeleteStep={handleDeleteStep} handleStepChange={handleStepChange}/>

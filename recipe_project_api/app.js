@@ -231,7 +231,7 @@ app.get('/recipe', jsonParser, (req, res) =>{
       
           }
           else {
-            res.status(200).send({message: "Invalid login"})
+            res.status(200).send({message: "Currently no recipes"})
           }
       })
       // console.log(cursurArray)
@@ -251,19 +251,19 @@ app.get('/recipe', jsonParser, (req, res) =>{
 
 app.post('/recipe', jsonParser, (req, res) => {
 
-  // const { MongoClient, ServerApiVersion } = require('mongodb');
-  // const uri = "mongodb+srv://Dannywu826:Momo826826@cluster0.sstc4pm.mongodb.net/?retryWrites=true&w=majority";
-  // const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+  const { MongoClient, ServerApiVersion } = require('mongodb');
+  const uri = "mongodb+srv://Dannywu826:Momo826826@cluster0.sstc4pm.mongodb.net/?retryWrites=true&w=majority";
+  const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
-  //   client.connect(err => {
-  //     const collection = client.db("Recipe").collection("User");
-  //     // perform actions on the collection object
+    client.connect(err => {
+      const collection = client.db("Recipe").collection("RecipeUnit");
+      // perform actions on the collection object
      
-  //     collection.insertOne((req.body))
-  //     setTimeout(() => {client.close()}, 1500)
+      collection.insertOne((req.body))
+      setTimeout(() => {client.close()}, 1500)
 
-  //   });
-  //   res.status(200).send({ message: (req.body.title) + ' ' + (req.body.post) })
+    });
+    res.status(200).send({ message: (req.body.title) + ' ' + (req.body.post) })
   console.log(req.body)
 })
 

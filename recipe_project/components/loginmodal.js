@@ -53,7 +53,8 @@ function LoginModal(props) {
       const data = {
         "username": username,
         "password": password,
-        "admin": false
+        "admin": false,
+        "approved": false
       };
       //http://localhost:5000/
       const response = await fetch("http://localhost:5000/user", {

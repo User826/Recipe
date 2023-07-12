@@ -167,7 +167,7 @@ app.post('/user', jsonParser, (req, res) => {
   const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
     client.connect(err => {
-      const collection = client.db("Recipe").collection("AwaitingAdminAcceptance");
+      const collection = client.db("Recipe").collection("User");
       // perform actions on the collection object
      
       collection.insertOne((req.body))
@@ -177,6 +177,56 @@ app.post('/user', jsonParser, (req, res) => {
     res.status(200).send({ message: (req.body)})
 })
 
+app.put('/user', jsonParser, (req, res) => {
+  const { MongoClient } = require("mongodb");
+  // Replace the uri string with your connection string.
+  const uri = "mongodb+srv://Dannywu826:Momo826826@cluster0.sstc4pm.mongodb.net/?retryWrites=true&w=majority";
+  const client = new MongoClient(uri);
+  var collection
+
+  console.log('Im in delete')
+  console.log(req.body)
+
+  if (req.body.action = 'reject'){
+    
+    // const filter = {username: req.body.username}
+    // const updating = {$set: {approved: false}}
+    
+    collection = client.db("Recipe").collection("User");
+      
+      
+
+      // const cursor = collection.findOneAndUpdate(filter, updating).then((result) =>{
+      const cursor = collection.findOneAndDelete({username: req.body.username}).then((result) =>{
+        if (result){
+
+          res.status(200).send({message:"rejected"})
+        } else {
+
+          res.status(200).send({message: "Currently no users"})
+        }})}
+  else{
+    const filter = {username: req.body.username}
+    const updating = {$set: {approved: true}}
+    
+    collection = client.db("Recipe").collection("User");
+      
+      
+
+      const cursor = collection.findOneAndUpdate(filter, updating).then((result) =>{
+        if (result){
+
+          res.status(200).send({message:"approved"})
+        } else {
+
+          res.status(200).send({message: "Currently no users"})
+        }})}
+  
+        
+      // res.send(req.body)
+
+})
+
 app.get('/user', jsonParser, (req, res) =>{
   
   const { MongoClient } = require("mongodb");
@@ -184,12 +234,29 @@ app.get('/user', jsonParser, (req, res) =>{
   const uri = "mongodb+srv://Dannywu826:Momo826826@cluster0.sstc4pm.mongodb.net/?retryWrites=true&w=majority";
   const client = new MongoClient(uri);
   var collection
-  const {username, password} = req.query
+
+  
+
+  if (req.query.awaiting){
+    
+    collection = client.db("Recipe").collection("User");
+      
+      const query = {approved: false}
+
+      const cursor = collection.find(query).toArray().then((result) =>{
+        if (result){
+
+          res.status(200).send({awaiting:result})
+        } else {
+
+          res.status(200).send({message: "Currently no users"})
+        }})} else{
+    const {username, password} = req.query
     client.connect(err => {
       
       collection = client.db("Recipe").collection("User");
       
-      const query = {username: username, password: password}
+      const query = {username: username, password: password, approved: true}
 
       const cursor = collection.findOne(query).then((result) =>{
         if (result){
@@ -203,14 +270,12 @@ app.get('/user', jsonParser, (req, res) =>{
       })
 
       setTimeout(() => {client.close()}, 1500)
-})})
+    })}
+  
+})
 
 app.get('/admin', jsonParser, (req, res) =>{
 
-  console.log("I'm in admin")
-  console.log(`This is req.session in get admin`)
-  console.log(req.session)
-  console.log(req.session.admin)
 
   if (req.session.admin){
     res.status(200).send({admin:true})
@@ -225,13 +290,10 @@ app.get('/admin', jsonParser, (req, res) =>{
 
 app.post('/admin', jsonParser, (req, res) => {
   
-    console.log(`I'm in post admin`)
-    console.log(`This is req.session after I'm in post admin ${req.session}`)
-
     if (req.body.admin){
       req.session.admin=true
       req.session.save(() => {
-        console.log(`This is req.session.admin after req.session.save ${req.session.admin}`)
+        
         return res.status(200).send({ message: "Admin confirmed"})
         
       })

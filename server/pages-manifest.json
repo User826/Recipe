@@ -1,0 +1,17 @@
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/about": "pages/about.html",
+  "/about_copy": "pages/about_copy.html",
+  "/admin": "pages/admin.html",
+  "/api/hello": "pages/api/hello.js",
+  "/": "pages/index.html",
+  "/index_copy": "pages/index_copy.html",
+  "/keyboard": "pages/keyboard.html",
+  "/menu": "pages/menu.html",
+  "/registerlogin": "pages/registerlogin.html",
+  "/search": "pages/search.html",
+  "/testnavbar": "pages/testnavbar.html",
+  "/_document": "pages/_document.js",
+  "/404": "pages/404.html"
+}

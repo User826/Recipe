@@ -77,7 +77,8 @@ export default function Useradmin() {
       });
     }
     if (grabbedData == true) {
-        return <div className={styles.bg}style={{overflow:'hidden'}}>
+        return <div>
+        <div className={styles.bg}style={{overflow:'hidden'}}>
           <div className={styles.parent}>
             <div>
             <div>
@@ -107,7 +108,9 @@ export default function Useradmin() {
           </div>
             </div> 
             
-          <div>
+          
+        </div>
+        <div>
             <p>Hello</p>
           </div>
         </div>
@@ -131,7 +134,7 @@ export default function Useradmin() {
             </div> 
             
           <div>
-            <p>Hello</p>
+            <p id='home'>Hello</p>
           </div>
         </div>
 

@@ -117,6 +117,61 @@ app.post('/test', jsonParser, (req, res) => {
     });  
 })
 
+app.get('/searchrecipe', jsonParser, async (req,res) => {
+  const { MongoClient } = require("mongodb");
+  // Replace the uri string with your connection string.
+  const uri = "mongodb+srv://Dannywu826:Momo826826@cluster0.sstc4pm.mongodb.net/?retryWrites=true&w=majority";
+  const client = new MongoClient(uri);
+  var collection
+
+  
+
+  try{
+    
+
+  if (req.query.search){
+    
+    collection = client.db("Recipe").collection("RecipeUnit");
+
+    const myString = req.query.search;
+    const myArray = [];
+
+    const words = myString.split(' ');
+    for (const word of words) {
+      myArray.push(word);
+    }
+     await collection.createIndex({
+        title: 'text',
+        subheader: 'text',
+        summary: 'text',
+        steps: 'text'
+      })
+
+
+
+    
+  
+      const cursor = collection.find({$text: {$search: myArray.join(' ')}})
+  
+      cursurArray = cursor.toArray().then(function(result){
+          
+          if (result.length != 0){        
+            res.status(200).send({sendData:result})                  
+          }
+          else {
+            res.status(200).send({message: "Currently no recipes matching your search requirements"})
+          }
+      })
+            
+      setTimeout(() => {client.close()}, 1500)
+
+  }}catch (err) {
+    console.error(err);
+    res.status(500).send({ message: 'An error occurred' });
+  }
+
+})
+
 app.get('/recipe', jsonParser, (req, res) =>{
   
   const { MongoClient } = require("mongodb");
@@ -124,12 +179,15 @@ app.get('/recipe', jsonParser, (req, res) =>{
   const uri = "mongodb+srv://Dannywu826:Momo826826@cluster0.sstc4pm.mongodb.net/?retryWrites=true&w=majority";
   const client = new MongoClient(uri);
   var collection
+
+  
+  
     client.connect(err => {
-      
+    
       collection = client.db("Recipe").collection("RecipeUnit");
-
+  
       const cursor = collection.find()
-
+  
       cursurArray = cursor.toArray().then(function(result){
           
           if (result.length != 0){        
@@ -141,7 +199,14 @@ app.get('/recipe', jsonParser, (req, res) =>{
       })
             
       setTimeout(() => {client.close()}, 1500)
-})})
+  })
+
+  
+
+
+
+  
+})
 
 app.post('/recipe', jsonParser, (req, res) => {
 

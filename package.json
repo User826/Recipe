@@ -2,30 +2,35 @@
     "name": "recipe_management",
     "version": "0.1.0",
     "private": true,
+    "homepage": "https://User826.github.io",
     "scripts": {
-      "dev": "next dev",
-      "build": "next build",
-      "start": "next start",
-      "lint": "next lint"
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint",
+        "predeploy" : "npm run build",
+        "deploy" : "gh-pages -d build"
     },
     "dependencies": {
-      "@emotion/react": "^11.11.0",
-      "@emotion/styled": "^11.11.0",
-      "@mui/icons-material": "^5.11.16",
-      "@mui/material": "^5.13.3",
-      "bootstrap": "^5.3.0",
-      "cors": "^2.8.5",
-      "eslint": "8.28.0",
-      "eslint-config-next": "13.0.4",
-      "express": "^4.18.2",
-      "firebase": "^9.23.0",
-      "mongodb": "^4.12.1",
-      "mongoose": "^6.8.0",
-      "next": "13.0.4",
-      "react": "18.2.0",
-      "react-bootstrap": "^2.8.0",
-      "react-dom": "18.2.0",
-      "react-icons": "^4.10.1"
+        "@emotion/react": "^11.11.0",
+        "@emotion/styled": "^11.11.0",
+        "@mui/icons-material": "^5.11.16",
+        "@mui/material": "^5.13.3",
+        "bootstrap": "^5.3.0",
+        "cors": "^2.8.5",
+        "eslint": "8.28.0",
+        "eslint-config-next": "13.0.4",
+        "express": "^4.18.2",
+        "firebase": "^9.23.0",
+        "mongodb": "^4.12.1",
+        "mongoose": "^6.8.0",
+        "next": "13.0.4",
+        "react": "18.2.0",
+        "react-bootstrap": "^2.8.0",
+        "react-dom": "18.2.0",
+        "react-icons": "^4.10.1"
+    },
+    "devDependencies": {
+        "gh-pages": "^5.0.0"
     }
-  }
-  
+}

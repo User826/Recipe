@@ -74,7 +74,7 @@ function BasicNavBar() {
                         <br/>
                         My Account
                     </Navbar.Brand>
-                    <Navbar.Brand href="#home">
+                    <Navbar.Brand href="/search">
                     <GrSearch size={35}/>
                         <br/>
                         Search for Recipes

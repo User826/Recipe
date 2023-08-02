@@ -1,5 +1,3 @@
-Got it, let me update the README to reflect that admins approve user account creation, not recipes:
-
 # Recipe Sharing App
 
 This is a recipe sharing app built with the MERN stack (MongoDB, Express, React, Node.js). Users can sign up and submit recipes. Admins must approve user accounts before they are able to login and use the app.

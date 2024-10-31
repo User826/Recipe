@@ -26,8 +26,10 @@ export default function Search(props) {
             for (const s of searchingSplit) {
             searchingArray.push(searching);
             }
-        
+            console.log(`Fetching with search term: ${searching}`);
+
             const response = await fetch(`http://localhost:5000/searchrecipe?search=${searching}`, {
+              
                 method: 'GET', // *GET, POST, PUT, DELETE, etc.
                 mode: 'cors', // no-cors, *cors, same-origin
                 cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -39,13 +41,17 @@ export default function Search(props) {
                 redirect: 'follow', // manual, *follow, error
                 referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                 // body: JSON.stringify({"search":searchingArray, "searching": true})
-            });
+            }
+            );
             return response.json();
             };
             getData().then((data)=>{
 
                 console.log(`getData was run`)
+                console.log("Response Data:", data);
+
                 console.log(data.sendData)
+                
                 var r = []
                 if (data.sendData){
                     {data.sendData.map((datum) => {

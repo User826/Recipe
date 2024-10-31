@@ -90,7 +90,7 @@ function BasicNavBar() {
             </Navbar>
             {/* Pass the correct props for modals */}
             <RecipeModal show={show} handleCloseChanges={handleClose} />
-            <LoginModal show={loginShow} handleCloseChanges={handleLoginCloseChanges} />
+            <LoginModal show={loginShow} handleLoginCloseChanges={handleLoginCloseChanges} />
         </Container>
     );
 }

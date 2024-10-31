@@ -1,179 +1,108 @@
-import {useRouter} from 'next/router'
-import { useState, useEffect } from 'react';
-import Button from 'react-bootstrap/Button';
+import React, { useEffect, useState } from 'react';
+import { Button, Table } from 'react-bootstrap';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
+const AdminPage = () => {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(true); // State to track admin status
+  const router = useRouter();
 
-export default function Admin(props) {
-    const [isAdmin, setIsAdmin] = useState(null);
-    const [grabbedData, setGrabbedData] = useState(false)
-    const [initialData, setInitialData] = useState(false)
-    const [awaitingArray, setAwaitingArray] = useState([])
-
-    const rejectAwaiting = (index) => {
-
-        const rejectAwaitingData = async () => {
-        
-            const response = await fetch(`http://localhost:5000/user`, {
-              method: 'PUT', // *GET, POST, PUT, DELETE, etc.
-              mode: 'cors', // no-cors, *cors, same-origin
-              cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-              credentials: 'include', // include, *same-origin, omit
-              headers: {
-                'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-              },
-              redirect: 'follow', // manual, *follow, error
-              referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-              body: JSON.stringify({"username":awaitingArray[index].username, "action": "reject"})
-            });
-            return response.json();
-          };
-          rejectAwaitingData().then(()=>{
-                       
-            const updatedAwaiting = [...awaitingArray];
-            updatedAwaiting.splice(index, 1);
-            setAwaitingArray(updatedAwaiting); 
-        })
-
-
-
-        
-    
+  useEffect(() => {
+    const checkAdminStatus = () => {
+      const adminStatus = sessionStorage.getItem('admin');
+      if (adminStatus !== 'true') {
+        // Set isAdmin to false if not an admin
+        setIsAdmin(false);
       }
-    
-    //   const handleDeleteStep = (index) => {
-    //     deleteStep(index)
-    //     console.log("Deleted step")
-    //   };
-    
-    //   const awaitingChange = (event, index) => {
-    //     const updatedSteps = [...steps];
-    //     updatedSteps[index] = event.target.value;
-    //     setSteps(updatedSteps);
-    //   }
-    
+    };
 
-    if (initialData == false){
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/user?awaiting=true'); // Fetch awaiting users
+        const data = await response.json();
+        setUsers(data.awaiting || []);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    const getAwaitingData = async () => {
-        
-        const response = await fetch(`http://localhost:5000/user?awaiting=yes`, {
-          method: 'GET', // *GET, POST, PUT, DELETE, etc.
-          mode: 'cors', // no-cors, *cors, same-origin
-          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-          credentials: 'include', // include, *same-origin, omit
-          headers: {
-            'Content-Type': 'application/json'
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          redirect: 'follow', // manual, *follow, error
-          referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        });
-        console.log("before awaiting response")
-        return response.json();
-      };
-      getAwaitingData().then((data)=>{
-        console.log(`I'm in get awaiting`)
-        console.log(data.awaiting)
+    checkAdminStatus(); // Check admin status on component mount
+    fetchUsers(); // Fetch users from API
+  }, [router]);
 
-        
-        console.log(`I'm in data awaiting`)
-        var r = [];
-        var awaitingUsers = (data.awaiting).map( (datum) =>{
-            
-            r.push({username:datum.username})
-            })
-        
-        setAwaitingArray(r)   
-        console.log(r);
-        setGrabbedData(true)
-        setInitialData(true)   
+  const handleApprove = async (userId) => {
+    try {
+      const response = await fetch(`http://localhost:5000/user/${userId}/approve`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-        
-
-
-
-      })}
-
-    
-
-
-    const getAdminData = async () => {
-        
-        const response = await fetch(`http://localhost:5000/admin`, {
-          method: 'GET', // *GET, POST, PUT, DELETE, etc.
-          mode: 'cors', // no-cors, *cors, same-origin
-          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-          credentials: 'include', // include, *same-origin, omit
-          headers: {
-            'Content-Type': 'application/json'
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          redirect: 'follow', // manual, *follow, error
-          referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        });
-        console.log("before response.json")
-        return response.json();
-      };
-
-      useEffect( () =>{
-        console.log("Before getAdminData")
-        getAdminData().then((data) =>{
-            console.log(`This is data.admin ${data.admin}`)
-            setIsAdmin(data.admin);
-
-        });
-      }, []);
-        
-    // getAdminData().then((data) =>{
-    // console.log(`This is data.admin ${data.wow}`)
-    // setIsAdmin(data.wow);
-    // console.log(isAdmin)
-
-    // if (isAdmin) {
-    //     return (
-    //         <div>
-    //         <p>Welcome Admin!</p>
-    //         </div>
-    //     );
-    //     } else {
-    //     return (
-    //         <div>
-    //         You're not an admin...
-    //         </div>
-    //     );
-    // }
-
-    // });
-
-    if (isAdmin && initialData) {
-        if (grabbedData){
-            return (
-                <div>
-                <p>Welcome Admin!</p>
-                {awaitingArray.map((individual, index) => {
-                    return (
-                    <div>
-                        <p>{individual.username}</p>
-                        <Button onClick={()=>{rejectAwaiting(index)}}> Reject </Button>
-                    </div>
-                    )})}
-                </div>
-            );
-        } 
-        else {
-            return (
-                <div>
-                    <p>Welcome Admin! Currently no users awaiting!</p>
-                </div>
-            )
-
-        }}
-    else {
-        return (
-            <div>
-            You're not an admin...
-            </div>
-        );
+      if (response.ok) {
+        fetchUsers(); // Re-fetch user data
+      } else {
+        console.error('Failed to approve user');
+      }
+    } catch (error) {
+      console.error('Error approving user:', error);
     }
-}
+  };
+
+  if (loading) return <div>Loading...</div>;
+
+  if (!isAdmin) {
+    return (
+      <div>
+        <h1>Access Denied</h1>
+        <p>You are not authorized to view this page.</p>
+        <Link href="/" passHref>
+          <Button variant="link">Back to Home</Button>
+        </Link>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <h1>Admin Page</h1>
+      <Link href="/" passHref>
+        <Button variant="link">Back to Home</Button>
+      </Link>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Approved</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Array.isArray(users) && users.length > 0 ? (
+            users.map((user) => (
+              <tr key={user._id}>
+                <td>{user.username}</td>
+                <td>{user.approved ? 'Yes' : 'No'}</td>
+                <td>
+                  {!user.approved && (
+                    <Button onClick={() => handleApprove(user._id)}>Approve</Button>
+                  )}
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="3">No users found.</td>
+            </tr>
+          )}
+        </tbody>
+      </Table>
+    </div>
+  );
+};
+
+export default AdminPage;

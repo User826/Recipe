@@ -110,9 +110,7 @@ export default function Useradmin() {
             
           
         </div>
-        <div>
-            <p>Hello</p>
-          </div>
+
         </div>
     }
     else if (noRecipes == true){

@@ -15,15 +15,34 @@ This is a recipe sharing app built with the MERN stack (MongoDB, Express, React,
 
 ### Install Dependencies
 
+Run the following command in both the client and server directories:
+
 ```
 npm install
 ```
 
-### Run Server 
+### Run the Application
 
-```
-npm run build 
-npm start
-```
+To run the application, you will need to set up two terminals:
 
-The server will run on http://localhost:3000
+1. **Terminal 1**:
+   - Navigate to the `recipe_project` directory:
+     ```bash
+     cd recipe_project
+     ```
+   - Build the client and run the development server:
+     ```bash
+     npm run build && npm run dev
+     ```
+
+2. **Terminal 2**:
+   - Navigate to the `recipe_project_api` directory:
+     ```bash
+     cd recipe_project_api
+     ```
+   - Run the API server:
+     ```bash
+     npm run dev
+     ```
+
+The application will then be accessible at [http://localhost:3000](http://localhost:3000).

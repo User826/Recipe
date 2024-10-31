@@ -104,34 +104,27 @@ app.post('/test', jsonParser, async (req, res) => {
 });
 
 app.get('/searchrecipe', jsonParser, async (req, res) => {
-    if (!req.query.search) {
-        return res.status(400).send({ message: "Search query is required." });
-    }
+  if (!req.query.search) {
+      return res.status(400).send({ message: "Search query is required." });
+  }
 
-    try {
-        const collection = db.collection("RecipeUnit");
-        const myString = req.query.search;
-        const myArray = myString.split(' ');
+  try {
+      const collection = db.collection("RecipeUnit");
+      const myString = req.query.search;
 
-        await collection.createIndex({
-            title: 'text',
-            subheader: 'text',
-            summary: 'text',
-            steps: 'text'
-        });
+      const result = await collection.find({ nGrams: { $regex: new RegExp(myString, 'i') } }).toArray();
 
-        const result = await collection.find({ $text: { $search: myString } }).toArray();
-
-        if (result.length !== 0) {
-            res.status(200).send({ sendData: result });
-        } else {
-            res.status(200).send({ message: "No recipes match your search criteria. Please try different keywords." });
-        }
-    } catch (err) {
-        console.error(err);
-        res.status(500).send({ message: 'An unexpected error occurred. Please try again later.' });
-    }
+      if (result.length !== 0) {
+          res.status(200).send({ sendData: result });
+      } else {
+          res.status(200).send({ message: "No recipes match your search criteria. Please try different keywords." });
+      }
+  } catch (err) {
+      console.error(err);
+      res.status(500).send({ message: 'An unexpected error occurred. Please try again later.' });
+  }
 });
+
 
 app.get('/recipe', jsonParser, async (req, res) => {
     try {
